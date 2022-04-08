@@ -1,1 +1,1 @@
-Blog
+Final project: "Blog Development"
