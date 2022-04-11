@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20220410103240_Initial")]
+    [Migration("20220411172705_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,10 +80,15 @@ namespace Blog.Data.Migrations
 
             modelBuilder.Entity("Blog.Data.Models.Tag", b =>
                 {
-                    b.Property<string>("TagId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("TagId");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Tags");
                 });
@@ -127,12 +132,12 @@ namespace Blog.Data.Migrations
                     b.Property<Guid>("PostsId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TagsTagId")
+                    b.Property<Guid>("TagsId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("PostsId", "TagsTagId");
+                    b.HasKey("PostsId", "TagsId");
 
-                    b.HasIndex("TagsTagId");
+                    b.HasIndex("TagsId");
 
                     b.ToTable("PostTags", (string)null);
                 });
@@ -177,7 +182,7 @@ namespace Blog.Data.Migrations
 
                     b.HasOne("Blog.Data.Models.Tag", null)
                         .WithMany()
-                        .HasForeignKey("TagsTagId")
+                        .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

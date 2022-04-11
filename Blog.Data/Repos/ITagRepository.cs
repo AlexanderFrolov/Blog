@@ -9,9 +9,9 @@ namespace Blog.Data.Repos
     public interface ITagRepository
     {
         Task SaveTag(Tag tag);
-        Task UpdateTag(Tag tag, string newTag);
+        Task UpdateTag(Tag tag, string newName);
         Task DeleteTag(Tag tag);
         Task<Tag[]> GetAllTags();
-        Task<Tag> GetTagById(string id);
+        Task<Tag> GetTagById(Guid id);
     }
 }
