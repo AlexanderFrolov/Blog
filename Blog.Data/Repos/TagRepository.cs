@@ -43,9 +43,9 @@ namespace Blog.Data.Repos
         /// <summary>
         /// get tag by id
         /// </summary>
-        public async Task<Tag> GetTagById(string id)
+        public async Task<Tag> GetTagById(Guid id)
         {
-            return await _context.Tags.Where(t => t.TagId == id).FirstOrDefaultAsync();
+            return await _context.Tags.Where(t => t.Id == id).FirstOrDefaultAsync();
         }
 
         /// <summary>
@@ -59,10 +59,10 @@ namespace Blog.Data.Repos
         /// <summary>
         /// update tag
         /// </summary>
-        public async Task UpdateTag(Tag tag, string newTag)
+        public async Task UpdateTag(Tag tag, string newName)
         {
-            if(!string.IsNullOrEmpty(newTag))
-                tag.TagId = newTag;
+            if(!string.IsNullOrEmpty(newName))
+                tag.Name = newName;
 
             // add to db
             var entry = _context.Entry(tag);

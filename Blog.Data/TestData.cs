@@ -5,12 +5,10 @@ namespace Blog.Data
 {
     public static class TestData
     {
-
         public static void EnterDataToBlogDb()
         {
             using (var context = new BlogContext())
-            {
-                // Пересоздаем базу
+            {               
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
@@ -20,11 +18,11 @@ namespace Blog.Data
 
                 context.Users.AddRange(user1, user2, user3);
 
-                var tag1 = new Tag { TagId = "Образование" };
-                var tag2 = new Tag { TagId = "Наука" };
-                var tag3 = new Tag { TagId = "Для детей" };
-                var tag4 = new Tag { TagId = "История" };
-                var tag5 = new Tag { TagId = "Психология" };
+                var tag1 = new Tag { Name = "Образование" };
+                var tag2 = new Tag { Name = "Наука" };
+                var tag3 = new Tag { Name = "Для детей" };
+                var tag4 = new Tag { Name = "История" };
+                var tag5 = new Tag { Name = "Психология" };
 
                 context.Tags.AddRange(tag1, tag2, tag3, tag4, tag5);
 
@@ -83,17 +81,7 @@ namespace Blog.Data
 
                 context.Comments.AddRange(comment1, comment2, comment3, comment4, comment5);
 
-
                 context.SaveChanges();
-
-
-                //var res = context.Tags.Where(x => x.TagId == "Медицина").Include(x => x.Posts).FirstOrDefault().Posts.First().Title;
-                //var res1 = context.Posts
-                //    .Include(x => x.User)
-                //    .Include(x => x.Comments)
-                //    .Include(x => x.Tags);
-                //Console.WriteLine(res1);
-
             }
         }
         
