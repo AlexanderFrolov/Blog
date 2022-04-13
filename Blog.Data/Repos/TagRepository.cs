@@ -49,6 +49,14 @@ namespace Blog.Data.Repos
         }
 
         /// <summary>
+        /// get tags by id.  returns array tags.
+        /// </summary>
+        public async Task<List<Tag>> GetTagsById(List<Guid> ids)
+        {
+            return await _context.Tags.Include(p => p.Posts).Where(c => ids.Contains(c.Id)).ToListAsync();
+        }   
+
+        /// <summary>
         /// get all tags
         /// </summary>
         public async Task<Tag[]> GetAllTags()

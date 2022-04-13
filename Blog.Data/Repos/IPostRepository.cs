@@ -8,10 +8,11 @@ namespace Blog.Data.Repos
     /// </summary>
     public interface IPostRepository
     {
-        Task SavePost(Post post, User user);
+        Task SavePost(Post post, User user, List<Tag> tags);
         Task DeletePost(Post post);
         Task UpdatePost(Post post, UpdatePostQuery query);
-        Task<Post[]> GetPosts();
+        Task<Post[]> GetAllPosts();
         Task<Post[]> GetPostsByUserId(Guid userId);
+        Task<Post> GetPostById(Guid id);
     }
 }

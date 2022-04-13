@@ -29,12 +29,15 @@ namespace Blog.Data
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {         
-            modelBuilder
-                .Entity<Post>()
-                .HasMany(p => p.Tags)
-                .WithMany(p => p.Posts)
-                .UsingEntity(j => j.ToTable("PostTags"));
+        {
+            //modelBuilder.Entity<PostsTags>()
+            //.HasKey(x => new {x.PostId, x.TagId});
+
+            //modelBuilder
+            //    .Entity<Post>()
+            //    .HasMany(p => p.Tags)
+            //    .WithMany(p => p.Posts)
+            //    .UsingEntity(j => j.ToTable("PostTags"));
 
         }
     }

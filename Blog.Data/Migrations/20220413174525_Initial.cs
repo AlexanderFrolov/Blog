@@ -46,7 +46,7 @@ namespace Blog.Data.Migrations
                     AddDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     ShortDescription = table.Column<string>(type: "TEXT", nullable: false),
-                    Contetnt = table.Column<string>(type: "TEXT", nullable: false),
+                    Content = table.Column<string>(type: "TEXT", nullable: false),
                     UserId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -88,7 +88,7 @@ namespace Blog.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PostTags",
+                name: "PostTag",
                 columns: table => new
                 {
                     PostsId = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -96,15 +96,15 @@ namespace Blog.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostTags", x => new { x.PostsId, x.TagsId });
+                    table.PrimaryKey("PK_PostTag", x => new { x.PostsId, x.TagsId });
                     table.ForeignKey(
-                        name: "FK_PostTags_Posts_PostsId",
+                        name: "FK_PostTag_Posts_PostsId",
                         column: x => x.PostsId,
                         principalTable: "Posts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PostTags_Tags_TagsId",
+                        name: "FK_PostTag_Tags_TagsId",
                         column: x => x.TagsId,
                         principalTable: "Tags",
                         principalColumn: "Id",
@@ -127,8 +127,8 @@ namespace Blog.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostTags_TagsId",
-                table: "PostTags",
+                name: "IX_PostTag_TagsId",
+                table: "PostTag",
                 column: "TagsId");
         }
 
@@ -138,7 +138,7 @@ namespace Blog.Data.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "PostTags");
+                name: "PostTag");
 
             migrationBuilder.DropTable(
                 name: "Posts");

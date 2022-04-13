@@ -3,14 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog", "Blog\Blog.csproj", "{95910038-86A7-4BF7-A84A-DC91105AA1F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog", "Blog\Blog.csproj", "{95910038-86A7-4BF7-A84A-DC91105AA1F9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{210F2D9A-C556-402A-99CC-59E85BF841A8} = {210F2D9A-C556-402A-99CC-59E85BF841A8}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Data", "Blog.Data\Blog.Data.csproj", "{B9859203-4A65-4654-BCA7-794FDD30709E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Data", "Blog.Data\Blog.Data.csproj", "{B9859203-4A65-4654-BCA7-794FDD30709E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Contracts", "Blog.Contracts\Blog.Contracts.csproj", "{210F2D9A-C556-402A-99CC-59E85BF841A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Contracts", "Blog.Contracts\Blog.Contracts.csproj", "{210F2D9A-C556-402A-99CC-59E85BF841A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApi", "BlogApi\BlogApi.csproj", "{AA61EF8A-ABEF-4BB2-B185-69CFCEAA2A3D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B9859203-4A65-4654-BCA7-794FDD30709E} = {B9859203-4A65-4654-BCA7-794FDD30709E}
+		{210F2D9A-C556-402A-99CC-59E85BF841A8} = {210F2D9A-C556-402A-99CC-59E85BF841A8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +36,10 @@ Global
 		{210F2D9A-C556-402A-99CC-59E85BF841A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{210F2D9A-C556-402A-99CC-59E85BF841A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{210F2D9A-C556-402A-99CC-59E85BF841A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA61EF8A-ABEF-4BB2-B185-69CFCEAA2A3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA61EF8A-ABEF-4BB2-B185-69CFCEAA2A3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA61EF8A-ABEF-4BB2-B185-69CFCEAA2A3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA61EF8A-ABEF-4BB2-B185-69CFCEAA2A3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
