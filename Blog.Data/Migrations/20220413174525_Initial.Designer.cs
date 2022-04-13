@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20220411172705_Initial")]
+    [Migration("20220413174525_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,7 +56,7 @@ namespace Blog.Data.Migrations
                     b.Property<DateTime>("AddDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Contetnt")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -139,7 +139,7 @@ namespace Blog.Data.Migrations
 
                     b.HasIndex("TagsId");
 
-                    b.ToTable("PostTags", (string)null);
+                    b.ToTable("PostTag");
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Comment", b =>

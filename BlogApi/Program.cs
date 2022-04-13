@@ -1,15 +1,13 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore.Sqlite;
-using Microsoft.EntityFrameworkCore.Design;
-using Blog.Data.Models;
-using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Blog.Data;
-using Blog;
 using Blog.Data.Repos;
+using BlogApi;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -26,36 +24,34 @@ builder.Services.AddDbContext<BlogContext>(options => options.UseSqlite(connecti
 
 var mapperConfig = new MapperConfiguration((v) =>
 {
-    v.AddProfile(new MappingProfile());
+    v.AddProfile(new MappingProfileApi());
 });
 
 IMapper mapper = mapperConfig.CreateMapper();
 
 builder.Services.AddSingleton(mapper);
 
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
-
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-//TestData.EnterDataToBlogDb(); 
-
+TestData.EnterDataToBlogDb();
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllers();
 
 app.Run();

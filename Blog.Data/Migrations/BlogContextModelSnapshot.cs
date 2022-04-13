@@ -54,7 +54,7 @@ namespace Blog.Data.Migrations
                     b.Property<DateTime>("AddDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Contetnt")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -137,7 +137,7 @@ namespace Blog.Data.Migrations
 
                     b.HasIndex("TagsId");
 
-                    b.ToTable("PostTags", (string)null);
+                    b.ToTable("PostTag");
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Comment", b =>

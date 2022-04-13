@@ -13,5 +13,6 @@ namespace Blog.Data.Repos
         Task DeleteTag(Tag tag);
         Task<Tag[]> GetAllTags();
         Task<Tag> GetTagById(Guid id);
+        Task<List<Tag>> GetTagsById(List<Guid> id);
     }
 }

@@ -7,10 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Comments\" />
-    <Folder Include="Models\Posts\" />
-    <Folder Include="Models\Users\" />
     <Folder Include="Validation\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blog.Data\Blog.Data.csproj" />
   </ItemGroup>
 
 </Project>

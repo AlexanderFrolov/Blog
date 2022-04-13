@@ -51,7 +51,10 @@ namespace Blog.Data.Repos
         /// </summary>
         public async Task<Comment> GetComment(Guid id)
         {
-            return await _context.Comments.Where(c => c.Id == id).FirstOrDefaultAsync();
+            return await _context.Comments
+                .Include(u => u.User)
+                .Include(p => p.Post) 
+                .Where(c => c.Id == id).FirstOrDefaultAsync();
         }
 
         /// <summary>

@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Blog.Data.Repos;
+﻿using AutoMapper;
 using Blog.Contracts.Models.Tags;
 using Blog.Data.Models;
-using AutoMapper;
+using Blog.Data.Repos;
+using Microsoft.AspNetCore.Mvc;
 
-
-namespace Blog.Controllers
+namespace BlogApi.Controllers
 {
-    public class TagsController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class TagsController : ControllerBase
     {
         private ITagRepository _tags;
         private IMapper _mapper;
@@ -16,43 +17,41 @@ namespace Blog.Controllers
         public TagsController(ITagRepository tags, IMapper mapper)
         {
             _tags = tags;
-            _mapper = mapper;   
+            _mapper = mapper;
         }
 
         /// <summary>
         /// add tag
         /// </summary>
         [HttpPost]
-        [Route("Tags/Add")]
+        [Route("Add")]
         public async Task<IActionResult> AddTag([FromBody] AddTagRequest request)
         {
             var tags = await _tags.GetAllTags();
 
-            var hasTag = tags.Any(t => t.Name == request.TagName);
+            var hasTag = tags.Any(t => t.Name == request.Name);
 
             if (hasTag)
                 return StatusCode(400, $"Такой тэг уже существует!");
 
+            var newTag = _mapper.Map<AddTagRequest, Tag>(request);
 
-            // нужно использовать маппер тут
-            var tag = new Tag { Name = request.TagName};
-            
-            await _tags.SaveTag(tag);
-           
-            return StatusCode(201, $"Тэг {tag.Name}  успешно добавлен!");
+            await _tags.SaveTag(newTag);
+
+            return StatusCode(201, $"Тэг {newTag.Name}  успешно добавлен!");
         }
 
         /// <summary>
         /// add tag
         /// </summary>
         [HttpPut]
-        [Route("Tags/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> UpdateTag(
             [FromRoute] Guid id,
             [FromBody] UpdateTagRequest request)
         {
             var tag = await _tags.GetTagById(id);
-
+            
             if (tag is null)
                 return StatusCode(400, $"Тэг с id: {id} не существует!");
 
@@ -60,19 +59,18 @@ namespace Blog.Controllers
             var withSameName = tags.Any(t => t.Name == request.TagName);
 
             if (withSameName)
-                return StatusCode(400, $"Ошибка: Тэг с именем {request.TagName} уже существует. Введите другое имя!");
+                return StatusCode(400, $"Ошибка: Тэг с именем {request.TagName} которое вы хотите добавить уже существует. Введите другое имя!");
 
-            // нужно использовать маппер тут
             await _tags.UpdateTag(tag, request.TagName);
 
-            return StatusCode(201, $"Тэг {id}::{tag.Name} успешно изменен на: {request.TagName}");
+            return StatusCode(201, $"Тэг {id} успешно изменен.");
         }
 
         /// <summary>
         /// view list of tags
         /// </summary>
         [HttpGet]
-        [Route("Tags")]
+        [Route("")]
         public async Task<IActionResult> GetAllTags()
         {
             var tags = await _tags.GetAllTags();
@@ -90,23 +88,27 @@ namespace Blog.Controllers
         /// view tag by id
         /// </summary>
         [HttpGet]
-        [Route("Tags/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> GetTagById([FromRoute] Guid id)
         {
             var tag = await _tags.GetTagById(id);
-            
+
             if (tag is null)
                 return StatusCode(400, $"Ошибка! Тэг c id:{id} не найден!");
 
-            // ТУТ МЫ НАРУШИЛИ ПРАВИЛО. ИСПРАВИТЬ! 
-            return StatusCode(200, tag);
+            var response = new GetTagResponse
+            {
+                Tag = _mapper.Map<Tag, TagView>(tag)
+            };
+
+            return StatusCode(200, response);
         }
 
         /// <summary>
         /// deleting existing tag by id
         /// </summary>
         [HttpDelete]
-        [Route("Tags/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var tag = await _tags.GetTagById(id);

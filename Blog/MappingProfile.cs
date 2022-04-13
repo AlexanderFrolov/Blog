@@ -8,7 +8,6 @@ namespace Blog
     {
         public MappingProfile()
         {
-            CreateMap<Tag, TagsView>();
         }
     }
 }
