@@ -76,7 +76,7 @@ namespace Blog.Data.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("Blog.Data.Models.Tag", b =>
+            modelBuilder.Entity("Blog.Data.Models.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,6 +87,26 @@ namespace Blog.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Blog.Data.Models.Tag", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tags");
                 });
@@ -140,6 +160,21 @@ namespace Blog.Data.Migrations
                     b.ToTable("PostTag");
                 });
 
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.Property<Guid>("RolesId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("RolesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("RoleUser");
+                });
+
             modelBuilder.Entity("Blog.Data.Models.Comment", b =>
                 {
                     b.HasOne("Blog.Data.Models.Post", "Post")
@@ -170,6 +205,17 @@ namespace Blog.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Blog.Data.Models.Tag", b =>
+                {
+                    b.HasOne("Blog.Data.Models.User", "User")
+                        .WithMany("Tags")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PostTag", b =>
                 {
                     b.HasOne("Blog.Data.Models.Post", null)
@@ -185,6 +231,21 @@ namespace Blog.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.HasOne("Blog.Data.Models.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Blog.Data.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Blog.Data.Models.Post", b =>
                 {
                     b.Navigation("Comments");
@@ -195,6 +256,8 @@ namespace Blog.Data.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Posts");
+
+                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

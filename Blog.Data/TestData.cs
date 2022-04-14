@@ -12,17 +12,23 @@ namespace Blog.Data
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                var user1 = new User { FirstName = "Alexander", LastName = "Frolov", Email = "alex@yandex.ru", DisplayName = "AlexFr", Password = "qwerty123" };
-                var user2 = new User { FirstName = "Maksim", LastName = "Maksimov", Email = "maksim@mail.ru", DisplayName = "MaksimMaks1", Password = "zxc13" };
-                var user3 = new User { FirstName = "Artem", LastName = "Olovian", Email = "artem@gmail.com", DisplayName = "Artem70", Password = "123easy123" };
+                var role1 = new Role { Name = "Administrator" };
+                var role2 = new Role { Name = "Moderator" };
+                var role3 = new Role { Name = "User" };
+
+                context.Roles.AddRange(role1, role2, role3);
+
+                var user1 = new User { FirstName = "Alexander", LastName = "Frolov", Email = "alex@yandex.ru", DisplayName = "AlexFr", Password = "qwerty123", Roles = new List<Role> { role1 } };
+                var user2 = new User { FirstName = "Maksim", LastName = "Maksimov", Email = "maksim@mail.ru", DisplayName = "MaksimMaks1", Password = "zxc13", Roles = new List<Role> { role2 } };
+                var user3 = new User { FirstName = "Artem", LastName = "Olovian", Email = "artem@gmail.com", DisplayName = "Artem70", Password = "123easy123", Roles = new List<Role> { role3 } };
 
                 context.Users.AddRange(user1, user2, user3);
 
-                var tag1 = new Tag { Name = "Образование" };
-                var tag2 = new Tag { Name = "Наука" };
-                var tag3 = new Tag { Name = "Для детей" };
-                var tag4 = new Tag { Name = "История" };
-                var tag5 = new Tag { Name = "Психология" };
+                var tag1 = new Tag { Name = "Образование", User = user1 };
+                var tag2 = new Tag { Name = "Наука", User = user3};
+                var tag3 = new Tag { Name = "Для детей", User = user2 };
+                var tag4 = new Tag { Name = "История", User = user1 };
+                var tag5 = new Tag { Name = "Психология", User = user1 };
 
                 context.Tags.AddRange(tag1, tag2, tag3, tag4, tag5);
 
@@ -51,7 +57,7 @@ namespace Blog.Data
                 {
                     Title = "Как добиться финансовой независимости?",
                     ShortDescription = "Вашему вниманию предлагаем несколько простых способов для достижения любой финансовой цели.",
-                    Tags = new List<Tag> { tag1, tag2, tag5 },
+                    Tags = new List<Tag> { tag2 },
                     User = user3,
                     Content = "Никто из нас не хочет оказаться погрязшим в долговых обязательствах, мы хотим быть финансово независимыми, хотим иметь достаточно" +
                     " возможностей для оплаты различных счетов, и, в конце концов, раньше уйти на пенсию. Сегодня вашему вниманию предлагаем несколько простых способов" +

@@ -14,5 +14,6 @@ namespace Blog.Data.Repos
         Task UpdateUser(User user, UpdateUserQuery query); 
         Task<User> GetUser(Guid id);
         Task<User[]> GetUsers();
+        Task<User> GetUserByEmail(string email);
     }
 }

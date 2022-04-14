@@ -14,7 +14,8 @@ namespace Blog.Data.Models
         public string DisplayName { get; set; }
 
         public ICollection<Post> Posts { get; set; }
-
         public ICollection<Comment> Comments { get; set; }
+        public ICollection<Tag> Tags { get; set; }
+        public ICollection<Role> Roles { get; set; }
     }
 }

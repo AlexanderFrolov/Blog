@@ -10,6 +10,7 @@ namespace Blog.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
 
         public BlogContext(DbContextOptions<BlogContext> options) : base(options)
@@ -30,15 +31,6 @@ namespace Blog.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<PostsTags>()
-            //.HasKey(x => new {x.PostId, x.TagId});
-
-            //modelBuilder
-            //    .Entity<Post>()
-            //    .HasMany(p => p.Tags)
-            //    .WithMany(p => p.Posts)
-            //    .UsingEntity(j => j.ToTable("PostTags"));
-
         }
     }
 }

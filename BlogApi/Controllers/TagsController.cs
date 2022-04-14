@@ -12,12 +12,16 @@ namespace BlogApi.Controllers
     {
         private ITagRepository _tags;
         private IMapper _mapper;
+        private IUserRepository _users;
 
-
-        public TagsController(ITagRepository tags, IMapper mapper)
+        public TagsController(
+            ITagRepository tags,
+            IMapper mapper,
+            IUserRepository users)
         {
             _tags = tags;
             _mapper = mapper;
+            _users = users;
         }
 
         /// <summary>
@@ -34,9 +38,11 @@ namespace BlogApi.Controllers
             if (hasTag)
                 return StatusCode(400, $"Такой тэг уже существует!");
 
-            var newTag = _mapper.Map<AddTagRequest, Tag>(request);
+            var user = await _users.GetUser(request.UserId);
 
-            await _tags.SaveTag(newTag);
+            var newTag = _mapper.Map<AddTagRequest, Tag>(request);          
+
+            await _tags.SaveTag(newTag, user);
 
             return StatusCode(201, $"Тэг {newTag.Name}  успешно добавлен!");
         }

@@ -21,8 +21,10 @@ namespace Blog.Data.Repos
         /// <summary>
         /// add new Tag
         /// </summary>
-        public async Task SaveTag(Tag tag)
+        public async Task SaveTag(Tag tag, User user)
         {
+            tag.User = user;
+
             var entry = _context.Entry(tag);
 
             if (entry.State == EntityState.Detached)

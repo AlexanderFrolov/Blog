@@ -3,7 +3,12 @@ using Blog.Contracts.Models.Users;
 using Blog.Data.Models;
 using Blog.Data.Queries;
 using Blog.Data.Repos;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Authentication;
+using System.Security.Claims;
 
 namespace BlogApi.Controllers
 {
@@ -22,9 +27,53 @@ namespace BlogApi.Controllers
             _users = users;
         }
 
+        
+        [HttpPost]
+        [Route("authenticate")]
+        public async Task<IActionResult> Authenticate(string email, string password)
+        {
+            if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
+                throw new ArgumentNullException("Данные введены не корректно");
+
+            User user = await _users.GetUserByEmail(email);
+
+            if (user is null)
+                throw new AuthenticationException("Пользователь на найден");
+
+            if (user.Password != password)
+                throw new AuthenticationException("Введенный пароль не корректен");
+          
+            // т.к. у пользователя может быть не одна роль а клайм роли принимает строку вторым аргументом
+            // переделаем список ролей в строку где через запятую перечислены все роли.
+            string userRoles = string.Join(",", user.Roles.Select(n => n.Name).ToArray());
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, userRoles)
+            };
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+                claims,
+                "AppCookie",
+                ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+            var response = new GetUserResponse
+            {
+                User = _mapper.Map<User, UserView>(user)
+            };
+
+            return StatusCode(200, response);
+        }
+
+
         /// <summary>
         /// view user by id
         /// </summary>
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetUserById([FromRoute] Guid id)
