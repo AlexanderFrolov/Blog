@@ -36,6 +36,14 @@ namespace Blog.Data.Repos
         }
 
         /// <summary>
+        /// get user by email
+        /// </summary>
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await _context.Users.Include(r => r.Roles).Where(u => u.Email == email).FirstOrDefaultAsync();
+        }
+
+        /// <summary>
         /// get all users
         /// </summary>
         public async Task<User[]> GetUsers()
@@ -48,6 +56,8 @@ namespace Blog.Data.Repos
         /// </summary>
         public async Task RegisterUser(User user)
         {
+            user.Roles = await _context.Roles.Where(r => r.Name == "User").ToListAsync();
+        
             var entry = _context.Entry(user);
 
             if(entry.State == EntityState.Detached)
