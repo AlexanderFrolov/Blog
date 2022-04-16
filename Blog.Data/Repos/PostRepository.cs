@@ -33,7 +33,12 @@ namespace Blog.Data.Repos
         /// </summary>
         public async Task<Post> GetPostById(Guid id)
         {
-            return await _context.Posts.Include(t => t.Tags).Where(p => p.Id == id).FirstOrDefaultAsync();
+            return await _context.Posts
+                .Include(t => t.Tags)
+                .Include(c => c.Comments)
+                .Include(u => u.User)
+                .Where(p => p.Id == id)
+                .FirstOrDefaultAsync();
         }
 
         /// <summary>

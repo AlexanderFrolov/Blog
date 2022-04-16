@@ -21,9 +21,9 @@ namespace Blog.Contracts.Models.Users
         public string LastName { get; set; }
         public string DisplayName { get; set; }
 
-      //  public ICollection<Post> Posts { get; set; }
+        //public ICollection<Post> Posts { get; set; }
 
-       // public ICollection<Comment> Comments { get; set; }
+        //public ICollection<Comment> Comments { get; set; }
     }
 
 }
