@@ -1,4 +1,5 @@
-﻿using Blog.Data.Models;
+﻿using Blog.Contracts.Models.Tags;
+using Blog.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +22,11 @@ namespace Blog.Contracts.Models.Posts
         public string ShortDescription { get; set; }
         public string Content { get; set; }
 
-        //public ICollection<Tag> Tags { get; set; }
+        public ICollection<TagsView> Tags { get; set; }
 
         public Guid UserId { get; set; }
     }
+
+
+
 }

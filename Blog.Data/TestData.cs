@@ -74,18 +74,56 @@ namespace Blog.Data
                     Content = "Гавайи являются самой длинной цепью в мире, протяженность островов составляет 1,600 миль. Основные острова расположены немного южнее" +
                     " Тропика Рака и находятся на одной широте с Кубой и Мексикой. Большинство земельной массы островов разделено между 8 островами. Заселенными" +
                     " являются только семь островов. Некоторые туристы боятся Гавайев, потому что это всего лишь маленькая часть суши в огромном океане. Почти вся" +
-                    " земельная масса островов находится на восьми основных островах.Население живет на семи из них."
+                    " земельная масса островов находится на восьми основных островах.Население живет на семи из них."                  
                 };
 
                 context.Posts.AddRange(post1, post2, post3, post4);
 
-                var comment1 = new Comment { Content = "Спасибо! Очень занимательная статья!", User = user1, Post = post1 };
-                var comment2 = new Comment { Content = "Теперь буду знать куда поехать отдыхать со своимим детьми:)", User = user1, Post = post2 };
-                var comment3 = new Comment { Content = "Попробую использовать эти правила в своем браке.", User = user3, Post = post1 };
-                var comment4 = new Comment { Content = "Мне кажется автор статьи совсем далек от понимания реалий сегодняшнего дня для простого работяги.", User = user3, Post = post3 };
-                var comment5 = new Comment { Content = "А вот у меня в принципе нет проблем т.к. я холост и прекрасно себя чувствую!", User = user2, Post = post1 };
+                var comment1 = new Comment {
+                    Content = "Спасибо! Очень занимательная статья!",
+                    User = user1,
+                    Post = post1,
+                    UserId = user1.Id,
+                    PostId = post1.Id
+                };
+
+                var comment2 = new Comment {
+                    Content = "Теперь буду знать куда поехать отдыхать со своимим детьми:)",
+                    User = user1,
+                    Post = post2,
+                    UserId = user1.Id,
+                    PostId = post2.Id
+                };
+
+                var comment3 = new Comment {
+                    Content = "Попробую использовать эти правила в своем браке.",
+                    User = user3,
+                    Post = post1,
+                    UserId = user3.Id,
+                    PostId = post1.Id
+                };
+
+                var comment4 = new Comment {
+                    Content = "Мне кажется автор статьи совсем далек от понимания реалий сегодняшнего дня для простого работяги.",
+                    User = user3,
+                    Post = post3,
+                    UserId = user3.Id,
+                    PostId = post3.Id
+                };
+
+                var comment5 = new Comment {
+                    Content = "А вот у меня в принципе нет проблем т.к. я холост и прекрасно себя чувствую!",
+                    User = user2,
+                    Post = post1,
+                    UserId = user2.Id,
+                    PostId = post1.Id
+                };
 
                 context.Comments.AddRange(comment1, comment2, comment3, comment4, comment5);
+
+
+                
+
 
                 context.SaveChanges();
             }
