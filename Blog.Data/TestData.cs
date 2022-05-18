@@ -9,7 +9,7 @@ namespace Blog.Data
         {
             using (var context = new BlogContext())
             {               
-                context.Database.EnsureDeleted();
+               // context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
                 var role1 = new Role { Name = "Administrator" };
