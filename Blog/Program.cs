@@ -55,7 +55,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-TestData.EnterDataToBlogDb(); 
+//TestData.EnterDataToBlogDb(); 
 
 
 app.UseHttpsRedirection();

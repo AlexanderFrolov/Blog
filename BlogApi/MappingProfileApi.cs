@@ -13,7 +13,7 @@ namespace BlogApi
         {
             CreateMap<Tag, TagsView>();
             CreateMap<Tag, TagView>();
-            CreateMap<AddTagRequest, Tag>();
+            CreateMap<AddRoleRequest, Tag>();
 
             CreateMap<AddPostRequest, Post>();
             CreateMap<Post, AllPostsView>();

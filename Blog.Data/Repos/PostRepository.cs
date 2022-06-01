@@ -55,8 +55,9 @@ namespace Blog.Data.Repos
         public async  Task<Post[]> GetPostsByUserId(Guid userId)
         {           
             return await _context.Posts
-                .Include(u => u.User)
+                .Include(u => u.User)                
                 .Where(u => u.User.Id == userId)
+                .Include(t => t.Tags)
                 .ToArrayAsync();
         }
 

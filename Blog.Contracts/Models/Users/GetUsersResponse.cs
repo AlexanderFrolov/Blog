@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blog.Contracts.Models.Roles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace Blog.Contracts.Models.Users
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DisplayName { get; set; }
+
+        public RoleView[] Roles { get; set; }
 
         //  public ICollection<Post> Posts { get; set; }
 

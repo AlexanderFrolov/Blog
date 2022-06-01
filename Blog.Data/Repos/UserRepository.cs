@@ -48,7 +48,8 @@ namespace Blog.Data.Repos
         /// </summary>
         public async Task<User[]> GetUsers()
         {
-            return await _context.Users.ToArrayAsync();
+            return await _context.Users.Include(r => r.Roles).ToArrayAsync();
+
         }
 
         /// <summary>

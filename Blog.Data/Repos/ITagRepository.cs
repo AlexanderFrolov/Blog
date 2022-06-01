@@ -14,5 +14,7 @@ namespace Blog.Data.Repos
         Task<Tag[]> GetAllTags();
         Task<Tag> GetTagById(Guid id);
         Task<List<Tag>> GetTagsById(List<Guid> id);
+        Task<Tag[]> GetTagsByUserId(Guid id);
+        
     }
 }

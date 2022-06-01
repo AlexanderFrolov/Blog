@@ -1,0 +1,79 @@
+﻿@using Blog.Contracts.Models.Users
+@using Blog.Contracts.Models.Roles
+@model GetUsersResponse
+
+@{
+    ViewData["Title"] = "All Users";
+}
+
+
+<style type="text/css">
+        
+    .card{
+        float: left;
+        margin-right: 2%;
+        margin-bottom: 2%;
+        width: 45%;
+    }    
+    
+</style>
+
+
+<form>
+    <fieldset>
+        <div class="container">
+            <main role="main" class="pb-3">
+                <legend>All Users</legend>
+
+                <div class="form-group">
+                    <hr>
+                    <div class="mb-4">
+                        <a href="">add user</a>
+                    </div>
+
+                @foreach (UsersView user in Model.Users)
+                {
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title"> @user.DisplayName </h4>
+                            <div class="mb-3">   
+                                 @foreach (RoleView role in user.Roles)
+                                {
+                                    @if(@role.Name == "Administrator")    
+                                    {
+                                        <span class="badge bg-danger">@role.Name</span>
+                                    }
+                                    else if(@role.Name == "Moderator")
+                                    {
+                                         <span class="badge bg-warning">@role.Name</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-info">@role.Name</span>                                     
+                                    }                                       
+                                }                            
+                            </div>
+
+                            <h5>email: <small class="text-muted"> @user.Email </small></h5>
+                            <h5>FULL NAME: <small class="text-muted"> @($"{user.FirstName} {@user.LastName}") </small></h5>
+                            <h5>Password: <small class="text-muted"> @user.Password </small></h5>
+
+                            <!-- <a href="#" class="card-link">Edit Info</a> -->
+                            
+                            <a class="card-link" asp-controller="Tags" asp-action="UserTags" asp-route-id="@user.Id">Tags</a>
+                            <a class="card-link" asp-controller="Posts" asp-action="UserPosts"  asp-route-id="@user.Id">Posts</a>                        
+                            <a class="card-link" asp-controller="Comments" asp-action="UserComments"  asp-route-id="@user.Id">Comments</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <small>registration date:</small><small class="text-muted"> @user.AddDate </small>
+                        </div>
+                    </div>
+                }
+
+
+                </div>
+            </main>
+        </div>
+
+    </fieldset>
+</form>

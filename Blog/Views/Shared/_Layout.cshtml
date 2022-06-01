@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Bootstrap.Examples</title>
+    <title>@ViewData["Title"] - Blog</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/style/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Bootstrap.Examples.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Blog.styles.css" asp-append-version="true" />
 </head>
 
 <body>
@@ -26,15 +26,16 @@
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link"  asp-controller="Home" asp-action="AllUsers">All Users</a>
-                        </li>
-                        <li class="nav-item">
+
+                          <li class="nav-item">
                             <a class="nav-link"  asp-controller="Home" asp-action="SignIn">Sign In</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"  asp-controller="Home" asp-action="RegisterUser">Register User</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link"  asp-controller="Users" asp-action="AllUsers">All Users</a>
+                        </li>              
 
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>

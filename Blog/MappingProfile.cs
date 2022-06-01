@@ -4,6 +4,7 @@ using Blog.Contracts.Models.Tags;
 using Blog.Contracts.Models.Posts;
 using Blog.Contracts.Models.Users;
 using Blog.Contracts.Models.Comments;
+using Blog.Contracts.Models.Roles;
 
 namespace Blog
 {
@@ -27,6 +28,10 @@ namespace Blog
             CreateMap<Comment, CommentsView>();
             CreateMap<Comment, CommentView>();
             CreateMap<AddCommentRequest, Comment>();
+
+            CreateMap<Role, RoleView>();
+
+
         }
     }
 }

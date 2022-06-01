@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Blog.Data.Models;
-using Blog.Data.Queries;
 
 namespace Blog.Data.Repos
 {
@@ -49,6 +43,15 @@ namespace Blog.Data.Repos
         {
             return await _context.Tags.Where(t => t.Id == id).FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// get tag by id
+        /// </summary>
+        public async Task<Tag[]> GetTagsByUserId(Guid id)
+        {
+            return await _context.Tags.Include(u => u.User).Where(u => u.User.Id == id).ToArrayAsync();
+        }
+        
 
         /// <summary>
         /// get tags by id.  returns array tags.

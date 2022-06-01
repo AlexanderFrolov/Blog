@@ -4,11 +4,10 @@ using Blog.Data.Models;
 using Blog.Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BlogApi.Controllers
+namespace Blog.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
-    public class TagsController : ControllerBase
+    public class TagsController : Controller
     {
         private ITagRepository _tags;
         private IMapper _mapper;
@@ -22,6 +21,47 @@ namespace BlogApi.Controllers
             _tags = tags;
             _mapper = mapper;
             _users = users;
+        }
+
+
+        /// <summary>
+        /// view tags by user id
+        /// </summary>
+        [HttpGet]
+        [Route("UserTags/{id}")]
+        public async Task<IActionResult> GetTagsByUserId([FromRoute] Guid id)
+        {
+
+            var tags = await _tags.GetTagsByUserId(id);
+
+            if (tags is null)
+                return StatusCode(400, $"Ошибка! Пользователь с id:{id} не найден!");
+
+            var response = new GetTagsResponse
+            {
+                TagsAmount = tags.Length,
+                Tags = _mapper.Map<Tag[], TagsView[]>(tags)
+            };
+
+            return View(response);
+        }
+
+        /// <summary>
+        /// view list of tags
+        /// </summary>
+        [HttpGet]
+        [Route("Tags")]
+        public async Task<IActionResult> GetAllTags()
+        {
+            var tags = await _tags.GetAllTags();
+
+            var response = new GetTagsResponse
+            {
+                TagsAmount = tags.Length,
+                Tags = _mapper.Map<Tag[], TagsView[]>(tags)
+            };
+
+            return View(response);
         }
 
         /// <summary>
@@ -70,24 +110,6 @@ namespace BlogApi.Controllers
             await _tags.UpdateTag(tag, request.TagName);
 
             return StatusCode(201, $"Тэг {id} успешно изменен.");
-        }
-
-        /// <summary>
-        /// view list of tags
-        /// </summary>
-        [HttpGet]
-        [Route("")]
-        public async Task<IActionResult> GetAllTags()
-        {
-            var tags = await _tags.GetAllTags();
-
-            var response = new GetTagsResponse
-            {
-                TagsAmount = tags.Length,
-                Tags = _mapper.Map<Tag[], TagsView[]>(tags)
-            };
-
-            return StatusCode(200, response);
         }
 
         /// <summary>

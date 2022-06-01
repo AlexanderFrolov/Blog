@@ -1,0 +1,72 @@
+﻿@using Blog.Contracts.Models.Posts
+@using Blog.Contracts.Models.Tags
+@model GetPostsByUserIdResponse
+
+<style type="text/css">
+              
+    .text-muted{
+        text-align: right;
+    }
+
+    .links {
+        text-decoration: none;
+    }
+    
+</style>
+
+<form>
+    <fieldset>
+        <div class="container">
+            <main  role="main" class="pb-3">
+                <legend>All User Posts</legend>
+                <div class="form-group"> 
+
+                    <hr>                       
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-outline-success">Add post</button>
+                        <!-- <a href="">add posts</a> -->
+                    </div> 
+
+                    @foreach(UserPostsView post in Model.Posts)
+                    {
+                        <div class="card mb-4">
+                            <a href="" class="links"> 
+                                <h4 class="card-header text-info"> @post.Title </h4>
+                            </a>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                @foreach(TagView tag in post.Tags)   
+                                {                                                          
+                                    <span class="badge bg-info"> @tag.Name </span>                                                                  
+                                }
+                                </div>
+                                <small class="text-muted">Short description:</small>     
+                                <p class="text-primary"> @post.ShortDescription </p>
+                                                  
+                                <!-- <a href="#" class="card-link">Edit post</a>
+                                <a href="#" class="card-link">Delete post</a> -->
+
+                                <div class="row">
+                                    <div class="form-floating col-lg-6">
+                                        <button type="button" class="btn btn-outline-warning btn-sm">Edit post</button>
+                                        <button type="button" class="btn btn-outline-danger btn-sm">Delete post</button>   
+                                    </div>
+                                    <div class="form-floating col-lg-6">
+                                        <p class="text-muted">number of views : 3  </p>
+                                    </div>
+                                </div>
+                                           
+                            </div>
+                            <div class="card-footer text-muted">
+                                <small>creation date:</small><small class="text-muted"> @post.AddDate </small>
+                            </div>
+                        </div>
+                    }
+             
+                </div>
+            </main>                                         
+        </div> 
+
+
+    </fieldset>
+</form>
