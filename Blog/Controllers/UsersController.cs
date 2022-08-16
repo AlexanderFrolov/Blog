@@ -39,6 +39,7 @@ namespace Blog.Controllers
         /// <summary>
         /// view all users 
         /// </summary>
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         [Route("AllUsers")]
         public async Task<IActionResult> GetUsers()
@@ -55,46 +56,46 @@ namespace Blog.Controllers
 
 
 
-        [HttpPost]
-        [Route("authenticate")]
-        public async Task<IActionResult> Authenticate(string email, string password)
-        {
-            if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
-                throw new ArgumentNullException("Данные введены не корректно");
+        //[HttpPost]
+        //[Route("authenticate")]
+        //public async Task<IActionResult> Authenticate(string email, string password)
+        //{
+        //    if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
+        //        throw new ArgumentNullException("Данные введены не корректно");
 
-            User user = await _users.GetUserByEmail(email);
+        //    User user = await _users.GetUserByEmail(email);
 
-            if (user is null)
-                throw new AuthenticationException("Пользователь на найден");
+        //    if (user is null)
+        //        throw new AuthenticationException("Пользователь на найден");
 
-            if (user.Password != password)
-                throw new AuthenticationException("Введенный пароль не корректен");
+        //    if (user.Password != password)
+        //        throw new AuthenticationException("Введенный пароль не корректен");
 
-            // т.к. у пользователя может быть не одна роль а клайм роли принимает строку вторым аргументом
-            // переделаем список ролей в строку где через запятую перечислены все роли.
-            string userRoles = string.Join(",", user.Roles.Select(n => n.Name).ToArray());
+        //    // т.к. у пользователя может быть не одна роль а клайм роли принимает строку вторым аргументом
+        //    // переделаем список ролей в строку где через запятую перечислены все роли.
+        //    string userRoles = string.Join(",", user.Roles.Select(n => n.Name).ToArray());
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, userRoles)
-            };
+        //    var claims = new List<Claim>
+        //    {
+        //        new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+        //        new Claim(ClaimsIdentity.DefaultRoleClaimType, userRoles)
+        //    };
 
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(
-                claims,
-                "AppCookie",
-                ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType);
+        //    ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+        //        claims,
+        //        "AppCookie",
+        //        ClaimsIdentity.DefaultNameClaimType,
+        //        ClaimsIdentity.DefaultRoleClaimType);
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+        //    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-            var response = new GetUserResponse
-            {
-                User = _mapper.Map<User, UserView>(user)
-            };
+        //    var response = new GetUserResponse
+        //    {
+        //        User = _mapper.Map<User, UserView>(user)
+        //    };
 
-            return StatusCode(200, response);
-        }
+        //    return StatusCode(200, response);
+        //}
 
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace Blog.Controllers
         [Authorize(Roles = "Administrator")]
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetUserById([FromRoute] Guid id)
+        public async Task<IActionResult> GetUserById([FromRoute] string id)
         {
             var user = await _users.GetUser(id);
 
@@ -118,14 +119,14 @@ namespace Blog.Controllers
             return StatusCode(200, response);
         }
 
-     
+
         /// <summary>
         /// update user
         /// </summary>
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateUser(
-            [FromRoute] Guid id,
+            [FromRoute] string id,
             [FromBody] UpdateUserRequest request)
         {
             var user = await _users.GetUser(id);
@@ -165,7 +166,7 @@ namespace Blog.Controllers
         /// </summary>
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
+        public async Task<IActionResult> DeleteUser([FromRoute] string id)
         {
             var user = await _users.GetUser(id);
 

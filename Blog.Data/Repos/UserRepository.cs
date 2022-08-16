@@ -30,7 +30,7 @@ namespace Blog.Data.Repos
         /// <summary>
         /// get user by id
         /// </summary>
-        public async Task<User> GetUser(Guid id)
+        public async Task<User> GetUser(string id)
         {
             return await _context.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
         }
@@ -40,7 +40,7 @@ namespace Blog.Data.Repos
         /// </summary>
         public async Task<User> GetUserByEmail(string email)
         {
-            return await _context.Users.Include(r => r.Roles).Where(u => u.Email == email).FirstOrDefaultAsync();
+            return await _context.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
         }
 
         /// <summary>
@@ -48,7 +48,8 @@ namespace Blog.Data.Repos
         /// </summary>
         public async Task<User[]> GetUsers()
         {
-            return await _context.Users.Include(r => r.Roles).ToArrayAsync();
+            //return await _context.Users.Include(r => r.Roles).ToArrayAsync();
+            return await _context.Users.ToArrayAsync();
 
         }
 
@@ -57,11 +58,11 @@ namespace Blog.Data.Repos
         /// </summary>
         public async Task RegisterUser(User user)
         {
-            user.Roles = await _context.Roles.Where(r => r.Name == "User").ToListAsync();
-        
+            //user.Roles = await _context.Roles.Where(r => r.Name == "User").ToListAsync();
+
             var entry = _context.Entry(user);
 
-            if(entry.State == EntityState.Detached)
+            if (entry.State == EntityState.Detached)
                 await _context.Users.AddAsync(user);
 
             await _context.SaveChangesAsync();
@@ -72,22 +73,22 @@ namespace Blog.Data.Repos
         /// </summary>
         public async Task UpdateUser(User user, UpdateUserQuery query)
         {
-            if(!string.IsNullOrEmpty(query.Email))
+            if (!string.IsNullOrEmpty(query.Email))
                 user.Email = query.Email;
             if (!string.IsNullOrEmpty(query.FirstName))
                 user.FirstName = query.FirstName;
             if (!string.IsNullOrEmpty(query.LastName))
                 user.LastName = query.LastName;
-            if (!string.IsNullOrEmpty(query.DisplayName))
-                user.DisplayName = query.DisplayName;
-            if (!string.IsNullOrEmpty(query.Password))
-                user.Password = query.Password;
+            //if (!string.IsNullOrEmpty(query.DisplayName))
+            //    user.DisplayName = query.DisplayName;
+            //if (!string.IsNullOrEmpty(query.Password))
+            //    user.Password = query.Password;
 
             var entry = _context.Entry(user);
-            if(entry.State == EntityState.Detached)
+            if (entry.State == EntityState.Detached)
                 _context.Users.Update(user);
 
             await _context.SaveChangesAsync();
         }
     }
-}
+    }

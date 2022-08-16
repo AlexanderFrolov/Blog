@@ -24,12 +24,10 @@ namespace BlogApi.Controllers
             _users = users;
         }
 
-        /// <summary>
-        /// add tag
-        /// </summary>
+     
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> AddTag([FromBody] AddRoleRequest request)
+        public async Task<IActionResult> AddTag([FromBody] AddTagRequest request)
         {
             var tags = await _tags.GetAllTags();
 
@@ -40,21 +38,19 @@ namespace BlogApi.Controllers
 
             var user = await _users.GetUser(request.UserId);
 
-            var newTag = _mapper.Map<AddRoleRequest, Tag>(request);          
+            var newTag = _mapper.Map<AddTagRequest, Tag>(request);          
 
             await _tags.SaveTag(newTag, user);
 
             return StatusCode(201, $"Тэг {newTag.Name}  успешно добавлен!");
         }
 
-        /// <summary>
-        /// add tag
-        /// </summary>
+   
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateTag(
             [FromRoute] Guid id,
-            [FromBody] UpdateRoleRequest request)
+            [FromBody] UpdateTagRequest request)
         {
             var tag = await _tags.GetTagById(id);
             
@@ -72,9 +68,7 @@ namespace BlogApi.Controllers
             return StatusCode(201, $"Тэг {id} успешно изменен.");
         }
 
-        /// <summary>
-        /// view list of tags
-        /// </summary>
+  
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> GetAllTags()
@@ -90,9 +84,7 @@ namespace BlogApi.Controllers
             return StatusCode(200, response);
         }
 
-        /// <summary>
-        /// view tag by id
-        /// </summary>
+   
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetTagById([FromRoute] Guid id)
@@ -110,9 +102,6 @@ namespace BlogApi.Controllers
             return StatusCode(200, response);
         }
 
-        /// <summary>
-        /// deleting existing tag by id
-        /// </summary>
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)

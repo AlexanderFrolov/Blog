@@ -3,9 +3,8 @@ using Blog.Data.Models;
 
 namespace Blog.Data.Repos
 {
-    public class RoleRepository : IRoleRepository
+    public class RoleRepository //: IRoleRepository
     {
-
         private readonly BlogContext _context;
 
         public RoleRepository(BlogContext context)
@@ -18,17 +17,17 @@ namespace Blog.Data.Repos
         /// </summary>
         public async Task DeleteRole(Role role)
         {
-            _context.Roles.Remove(role);
+           // _context.Roles.Remove(role);
             await _context.SaveChangesAsync();
         }
 
         /// <summary>
         /// get all Roles
         /// </summary>
-        public async Task<Role[]> GetAllRoles()
-        {
-            return await _context.Roles.ToArrayAsync();
-        }
+      //  public async Task<Role[]> GetAllRoles()
+      //  {
+           // return await _context.Roles.ToArrayAsync();
+      //  }
 
         /// <summary>
         /// add new Role
@@ -38,7 +37,7 @@ namespace Blog.Data.Repos
             var entry = _context.Entry(role);
 
             if (entry.State == EntityState.Detached)
-                await _context.Roles.AddAsync(role);
+              //  await _context.Roles.AddAsync(role);
 
             await _context.SaveChangesAsync();
         }
@@ -55,7 +54,7 @@ namespace Blog.Data.Repos
       
             var entry = _context.Entry(role);
             if (entry.State == EntityState.Detached)
-                _context.Roles.Update(role);
+              //  _context.Roles.Update(role);
 
             await _context.SaveChangesAsync();
         }

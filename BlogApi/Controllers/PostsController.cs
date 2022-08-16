@@ -29,9 +29,7 @@ namespace BlogApi.Controllers
             _users = users;   
         }
 
-        /// <summary>
-        /// add post
-        /// </summary>
+     
         [HttpPost]
         [Route("Add")]
         public async Task<IActionResult> AddPost([FromBody] AddPostRequest request)
@@ -46,9 +44,7 @@ namespace BlogApi.Controllers
             return StatusCode(201, $"Пост: {newPost.Title} успешно добавлен!");
         }
 
-        /// <summary>
-        /// update post
-        /// </summary>
+   
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdatePost(
@@ -73,9 +69,7 @@ namespace BlogApi.Controllers
             return StatusCode(201, $"Пост {id} успешно изменен.");
         }
 
-        /// <summary>
-        /// view list of posts
-        /// </summary>
+      
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> GetAllPosts()
@@ -91,9 +85,7 @@ namespace BlogApi.Controllers
             return StatusCode(200, response);
         }
 
-        /// <summary>
-        /// view post by id
-        /// </summary>
+      
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetPostById([FromRoute] Guid id)
@@ -111,9 +103,7 @@ namespace BlogApi.Controllers
             return StatusCode(200, response);
         }
 
-        /// <summary>
-        /// view list posts by user id
-        /// </summary>
+      
         [HttpGet]
         [Route("UserPosts/{id}")]
         public async Task<IActionResult> GetPostsByUserId([FromRoute] Guid id)
@@ -131,9 +121,7 @@ namespace BlogApi.Controllers
             return StatusCode(200, response);
         }
 
-        /// <summary>
-        /// deleting existing post by id
-        /// </summary>
+     
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)

@@ -1,25 +1,31 @@
 using AutoMapper;
 using Blog.Data;
+using Blog.Data.Models;
 using Blog.Data.Repos;
 using BlogApi;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-// Add services to the container.
-//builder.Services.AddControllersWithViews();
-
 // registering a repository service to interact with the database
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IPostRepository, PostRepository>();
-builder.Services.AddScoped<ITagRepository, TagRepository>();
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+//builder.Services.AddScoped<IPostRepository, PostRepository>();
+//builder.Services.AddScoped<ITagRepository, TagRepository>();
+//builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<BlogContext>(options => options.UseSqlite(connection), ServiceLifetime.Singleton);
+
+builder.Services
+    .AddDbContext<BlogContext>(options => options.UseSqlite(connection), ServiceLifetime.Singleton)
+    .AddIdentity<User, IdentityRole>(opts => {
+        opts.Password.RequiredLength = 5;
+        opts.Password.RequireNonAlphanumeric = false;
+        opts.Password.RequireLowercase = false;
+        opts.Password.RequireUppercase = false;
+        opts.Password.RequireDigit = false;
+    })
+    .AddEntityFrameworkStores<BlogContext>();
 
 
 var mapperConfig = new MapperConfiguration((v) =>
@@ -59,10 +65,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// заполняем базу тестовыми данными
 //TestData.EnterDataToBlogDb();
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();

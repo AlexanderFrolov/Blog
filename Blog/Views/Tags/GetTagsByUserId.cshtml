@@ -1,4 +1,11 @@
-﻿<style type="text/css">
+﻿@using Blog.Contracts.Models.Tags
+@model GetTagsResponse
+
+@{
+    ViewData["Title"] = "All User Tags";
+}
+
+<style type="text/css">
         
     .card{
         float: left;
@@ -24,90 +31,30 @@
                     <div class="mb-4">
                         <a href="">add tag</a>
                     </div>
+                    @foreach (TagsView tag in Model.Tags)
+                    {
+                        <div class="card">
+                            <div class="card-body">
 
-                    <div class="card">
-                        <div class="card-body">
+                                <div class="row">
+                                    <div class="form-floating col-lg-6">
+                                        <h4 class="card-title mb-3">@tag.Name</h4>
+                                    </div>
+                                    <div class="form-floating col-lg-6">
+                                        <p class="text-info"> number of posts : 3 </p>
+                                    </div>
+                                </div>
 
-                            <div class="row">
-                                <div class="form-floating col-lg-6">
-                                    <h4 class="card-title mb-3">ИТ - индустрия</h4>
-                                </div>
-                                <div class="form-floating col-lg-6">
-                                    <p class="text-info"> number of posts : 3 </p>
-                                </div>
+                                <a href="#" class="card-link">Edit tag</a>
+                                <a href="#" class="card-link">Go to posts</a>
+
                             </div>
-
-                            <a href="#" class="card-link">Edit tag</a>
-                            <a href="#" class="card-link">Go to posts</a>
-
-                        </div>
-                        <div class="card-footer text-muted">
-                            <small>creation date:</small><small class="text-muted">12.03.2022</small>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-body">
-
-                            <div class="row">
-                                <div class="form-floating col-lg-6">
-                                    <h4 class="card-title mb-3">ИТ - индустрия</h4>
-                                </div>
-                                <div class="form-floating col-lg-6">
-                                    <p class="text-info"> number of posts : 3 </p>
-                                </div>
+                            <div class="card-footer text-muted">
+                                <small>creation date:</small><small class="text-muted">12.03.2022</small>
                             </div>
-
-                            <a href="#" class="card-link">Edit tag</a>
-                            <a href="#" class="card-link">Go to posts</a>
-
                         </div>
-                        <div class="card-footer text-muted">
-                            <small>creation date:</small><small class="text-muted">12.03.2022</small>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-
-                            <div class="row">
-                                <div class="form-floating col-lg-6">
-                                    <h4 class="card-title mb-3">ИТ - индустрия</h4>
-                                </div>
-                                <div class="form-floating col-lg-6">
-                                    <p class="text-info"> number of posts : 3 </p>
-                                </div>
-                            </div>
-
-                            <a href="#" class="card-link">Edit tag</a>
-                            <a href="#" class="card-link">Go to posts</a>
-
-                        </div>
-                        <div class="card-footer text-muted">
-                            <small>creation date:</small><small class="text-muted">12.03.2022</small>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-
-                            <div class="row">
-                                <div class="form-floating col-lg-6">
-                                    <h4 class="card-title mb-3">ИТ - индустрия</h4>
-                                </div>
-                                <div class="form-floating col-lg-6">
-                                    <p class="text-info"> number of posts : 3 </p>
-                                </div>
-                            </div>
-
-                            <a href="#" class="card-link">Edit tag</a>
-                            <a href="#" class="card-link">Go to posts</a>
-
-                        </div>
-                        <div class="card-footer text-muted">
-                            <small>creation date:</small><small class="text-muted">12.03.2022</small>
-                        </div>
-                    </div>
-
-
+                    }
+                   
                 </div>
             </main>
         </div>

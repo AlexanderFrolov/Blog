@@ -1,0 +1,77 @@
+﻿@model Blog.ViewModels.Account.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<form method="post" asp-controller="AccountManager" asp-action="Login">
+    <fieldset>
+            
+        <div class="container">
+            <main  role="main" class="pb-3">
+                <h3>Welcome to the Blog!</h3>
+                <!-- <legend></legend> -->
+               
+                <div class="form-group">
+                    <label class="form-label mt-4">Use your Account</label>
+                    <div class="form-floating mb-3">
+                        <input asp-for="UserName" type="text" class="form-control" id="floatingInputUserName" placeholder="UserName">
+                        <label for="floatingInputUserName">UserName</label>
+                       @* <span asp-validation-for="UserName" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-floating  mb-3">
+                        <input asp-for="Password" type="password" value="" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                        @*<div class="invalid-feedback">sorry, wrong password. try another?</div>*@
+                    </div>
+                       
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <button type="submit" class="btn btn-primary">Sign in</button>
+                        </div>
+
+                         <div class="col-lg-7" style="padding-left: 43%;">
+                            <p class="text-primary">New to this Blog?</p>                                                   
+                        </div>
+
+                        <div class="col-lg-3">
+                            @Html.RouteLink("Create acccount", new { action = "Register", controller="Register"}, new { @class="text-info"} )
+                        </div>                                    
+                    </div>
+
+
+                </div>
+             
+                <!-- <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <h4 class="alert-heading">Warning!</h4>
+                    <p>- Lorem ipsum dolor sit amet conse ctetur, adipisicing elit.</p>
+                </div> -->
+
+                <!-- <div class="form-group has-success">
+                    <label class="form-label mt-4" for="inputvalid">valid input</label>
+                    <input type="text" value="correct value" class="form-control is-valid" id="inputvalid">
+                    <div class="valid-feedback">success! you've done it.</div>
+                </div>
+                <div class="form-group has-danger">
+                    <label class="form-label mt-4" for="inputinvalid">invalid input</label>
+                    <input type="text" value="wrong value" class="form-control is-invalid" id="inputinvalid">
+                    <div class="invalid-feedback">sorry, that username's taken. try another?</div>
+                </div> -->
+                    
+            </main>                                         
+        </div>          
+    </fieldset>
+</form>
+ 
+
+
+
+
+ 
+  
+                    
+    
+
+
+

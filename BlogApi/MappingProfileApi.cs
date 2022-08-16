@@ -13,20 +13,31 @@ namespace BlogApi
         {
             CreateMap<Tag, TagsView>();
             CreateMap<Tag, TagView>();
-            CreateMap<AddRoleRequest, Tag>();
+            CreateMap<AddTagRequest, Tag>();
 
             CreateMap<AddPostRequest, Post>();
             CreateMap<Post, AllPostsView>();
             CreateMap<Post, GetPostByIdView>();
             CreateMap<Post, UserPostsView>();
 
-            CreateMap<AddUserRequest, User>();
+           // CreateMap<AddUserRequest, User>();
             CreateMap<User, UserView>();
             CreateMap<User, UsersView>();
 
             CreateMap<Comment, CommentsView>();
             CreateMap<Comment, CommentView>();
             CreateMap<AddCommentRequest, Comment>();
+
+
+            
+            CreateMap<UpdateUserRequest, User>();
+            CreateMap<AuthorizeUserRequest, User>();
+
+            CreateMap<AddUserRequest, User>()
+             .ForMember(x => x.Email, opt => opt.MapFrom(c => c.EmailReg))
+             .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Login));
+
+
         }
     }
 }

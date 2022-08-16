@@ -1,5 +1,9 @@
-﻿namespace Blog.Data.Models
+﻿using SQLiteNetExtensions.Attributes;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Blog.Data.Models
 {
+    [Table("Roles")]
     public class Role
     {
         public Guid Id { get; set; } = Guid.NewGuid();

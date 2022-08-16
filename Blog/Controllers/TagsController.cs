@@ -69,7 +69,7 @@ namespace Blog.Controllers
         /// </summary>
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> AddTag([FromBody] AddRoleRequest request)
+        public async Task<IActionResult> AddTag([FromBody] AddTagRequest request)
         {
             var tags = await _tags.GetAllTags();
 
@@ -80,7 +80,7 @@ namespace Blog.Controllers
 
             var user = await _users.GetUser(request.UserId);
 
-            var newTag = _mapper.Map<AddRoleRequest, Tag>(request);          
+            var newTag = _mapper.Map<AddTagRequest, Tag>(request);          
 
             await _tags.SaveTag(newTag, user);
 
@@ -94,7 +94,7 @@ namespace Blog.Controllers
         [Route("{id}")]
         public async Task<IActionResult> UpdateTag(
             [FromRoute] Guid id,
-            [FromBody] UpdateRoleRequest request)
+            [FromBody] UpdateTagRequest request)
         {
             var tag = await _tags.GetTagById(id);
             

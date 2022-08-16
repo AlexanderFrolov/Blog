@@ -8,7 +8,6 @@ using Blog.Contracts.Models.Comments;
 
 namespace BlogApi.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
     public class CommentsController : Controller
     {
@@ -50,20 +49,20 @@ namespace BlogApi.Controllers
         /// <summary>
         /// add comment
         /// </summary>
-        [HttpPost]
-        [Route("Add")]
-        public async Task<IActionResult> AddComment([FromBody] AddCommentRequest request)
-        {
-            var user = await _users.GetUser(request.UserId);
-            var post = await _posts.GetPostById(request.PostId);
+        //[HttpPost]
+        //[Route("Add")]
+        //public async Task<IActionResult> AddComment([FromBody] AddCommentRequest request)
+        //{
+        //    var user = await _users.GetUser(request.UserId);
+        //    var post = await _posts.GetPostById(request.PostId);
 
-            var comment = _mapper.Map<AddCommentRequest, Comment>(request);
+        //    var comment = _mapper.Map<AddCommentRequest, Comment>(request);
 
-            await _comments.SaveComment(comment, user, post);
+        //    await _comments.SaveComment(comment, user, post);
           
-            return StatusCode(201, $"Комментарий: {comment.Id} Пользователя: {user.DisplayName} " +
-                $"под постом: {post.Title} успешно добавлен!");
-        }
+        //    return StatusCode(201, $"Комментарий: {comment.Id} Пользователя: {user.DisplayName} " +
+        //        $"под постом: {post.Title} успешно добавлен!");
+        //}
 
         /// <summary>
         /// view comment by id 

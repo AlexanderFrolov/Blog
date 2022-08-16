@@ -5,6 +5,7 @@ using Blog.Contracts.Models.Posts;
 using Blog.Contracts.Models.Users;
 using Blog.Contracts.Models.Comments;
 using Blog.Contracts.Models.Roles;
+using Blog.ViewModels.Account;
 
 namespace Blog
 {
@@ -31,6 +32,11 @@ namespace Blog
 
             CreateMap<Role, RoleView>();
 
+            CreateMap<RegisterViewModel, User>()             
+              .ForMember(x => x.Email, opt => opt.MapFrom(c => c.EmailReg))
+              .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Login));
+
+            CreateMap<LoginViewModel, User>();
 
         }
     }

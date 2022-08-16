@@ -1,11 +1,14 @@
 ﻿using Blog.Models;
+using Blog.ViewModels.Account;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Blog.Controllers
 {
+    //[Route("[controller]")]
     public class HomeController : Controller
     {
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -13,28 +16,15 @@ namespace Blog.Controllers
             _logger = logger;
         }
 
+        [Route("")]
+        [Route("[controller]/[action]")]
         public IActionResult Index()
         {
-            return View();
+            return View(new MainViewModel());
         }
 
+        [Route("[action]")]
         public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        //public IActionResult AllUsers()
-        //{
-
-        //    return View();
-        //}
-
-        public IActionResult RegisterUser()
-        {
-            return View();
-        }
-
-        public IActionResult SignIn()
         {
             return View();
         }
@@ -44,5 +34,59 @@ namespace Blog.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        //private readonly ILogger<HomeController> _logger;
+
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        //[HttpGet]
+        //[Route("index")]
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        //public IActionResult Privacy()
+        //{
+        //    return View(); 
+        //}
+
+        //[HttpGet]
+        //[Route("authorization")]
+        //public IActionResult SignIn()
+        //{
+
+        //    return View();
+        //}
+
+
+        //[HttpPost]
+        //[Route("authorization")]
+        //public IActionResult SignIn(LoginViewModel model)
+        //{
+
+        //    if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
+        //        return BadRequest("Email и/или пароль не установлены");
+
+        //    string email = model.Email;
+        //    string password = model.Password;
+        //    return Redirect(model.ReturnUrl ?? "/Home/index");          
+        //}
+
+
+        //[HttpGet]
+        //[Route("register")]
+        //public IActionResult RegisterUser()
+        //{
+        //    return View();
+        //}
+
+
+
+
     }
 }

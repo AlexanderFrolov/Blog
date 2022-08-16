@@ -23,18 +23,18 @@ namespace Blog.Data.Repos
         /// </summary>
         public async Task SaveComment(Comment comment, User user, Post post)
         {
-            comment.Post = post;
-            comment.PostId = post.Id;
+            //comment.Post = post;
+            //comment.PostId = post.Id;
 
-            comment.User = user;
-            comment.UserId = user.Id;
+            //comment.User = user;
+            //comment.UserId = user.Id;
 
-            var entry = _context.Entry(comment);
+            //var entry = _context.Entry(comment);
 
-            if (entry.State == EntityState.Detached)
-                await _context.Comments.AddAsync(comment);
+            //if (entry.State == EntityState.Detached)
+            //    await _context.Comments.AddAsync(comment);
 
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
         }
 
         /// <summary>

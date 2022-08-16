@@ -1,0 +1,42 @@
+﻿@using Blog.Contracts.Models.Roles
+@model GetRolesResponse
+
+@{
+    ViewData["Title"] = "All Roles";
+}
+
+<form>
+    <fieldset>
+        <div class="container">
+            <main  role="main" class="pb-3">
+                <legend>All Roles</legend>
+                <div class="form-group"> 
+
+                    <hr>
+                    <div class="mb-4">
+                        <a href="">add role</a>
+                    </div> 
+                     @foreach (RoleView role in Model.Roles)
+                    {
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                                                                                                                                                          
+                                <h4 class="card-title mb-3">@role.Name</h4>      
+                                                                  
+                                <p class="text-primary">@role.Description</p>
+                                                      
+                                <a href="#" class="card-link">Edit role</a>
+
+                            </div>
+                            <div class="card-footer text-muted">
+                                <small>creation date:</small><small class="text-muted">12.03.2022</small>
+                            </div>
+                        </div>
+                    }            
+                        
+                </div>
+            </main>                                         
+        </div> 
+
+    </fieldset>
+</form>

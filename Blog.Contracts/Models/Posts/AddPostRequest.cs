@@ -14,6 +14,6 @@ namespace Blog.Contracts.Models.Posts
         public string Content { get; set; }
 
         public List<Guid> TagsId { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

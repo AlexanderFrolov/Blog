@@ -15,7 +15,7 @@ namespace Blog.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.3");
 
             modelBuilder.Entity("Blog.Data.Models.Comment", b =>
                 {
@@ -36,11 +36,14 @@ namespace Blog.Data.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserId1")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Comments");
                 });
@@ -69,64 +72,63 @@ namespace Blog.Data.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserId1")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("Blog.Data.Models.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("Blog.Data.Models.Tag", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("PostId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tags");
+                    b.ToTable("UserTags", (string)null);
                 });
 
             modelBuilder.Entity("Blog.Data.Models.User", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("AddDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
-                        .IsRequired()
+                        .HasMaxLength(256)
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -136,43 +138,177 @@ namespace Blog.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Password")
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoleId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("PostTag", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.Property<Guid>("PostsId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClaimType")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("TagsId")
+                    b.Property<string>("ClaimValue")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("PostsId", "TagsId");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.HasIndex("TagsId");
+                    b.HasKey("Id");
 
-                    b.ToTable("PostTag");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<Guid>("RolesId")
+                    b.Property<string>("LoginProvider")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("UsersId")
+                    b.Property<string>("ProviderKey")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("RolesId", "UsersId");
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("TEXT");
 
-                    b.HasIndex("UsersId");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("RoleUser");
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Comment", b =>
@@ -184,10 +320,8 @@ namespace Blog.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Blog.Data.Models.User", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Post");
 
@@ -197,18 +331,20 @@ namespace Blog.Data.Migrations
             modelBuilder.Entity("Blog.Data.Models.Post", b =>
                 {
                     b.HasOne("Blog.Data.Models.User", "User")
-                        .WithMany("Posts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Blog.Data.Models.Tag", b =>
                 {
-                    b.HasOne("Blog.Data.Models.User", "User")
+                    b.HasOne("Blog.Data.Models.Post", null)
                         .WithMany("Tags")
+                        .HasForeignKey("PostId");
+
+                    b.HasOne("Blog.Data.Models.User", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -216,32 +352,53 @@ namespace Blog.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PostTag", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Blog.Data.Models.Post", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
-                        .HasForeignKey("PostsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Blog.Data.Models.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Blog.Data.Models.Role", null)
+                    b.HasOne("Blog.Data.Models.User", null)
                         .WithMany()
-                        .HasForeignKey("RolesId")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Blog.Data.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Blog.Data.Models.User", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Blog.Data.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -249,13 +406,6 @@ namespace Blog.Data.Migrations
             modelBuilder.Entity("Blog.Data.Models.Post", b =>
                 {
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("Blog.Data.Models.User", b =>
-                {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Posts");
 
                     b.Navigation("Tags");
                 });

@@ -12,8 +12,8 @@ namespace Blog.Data.Repos
         Task RegisterUser(User user);
         Task DeleteUser(User user);
         Task UpdateUser(User user, UpdateUserQuery query); 
-        Task<User> GetUser(Guid id);
+        Task<User> GetUser(string id);
         Task<User[]> GetUsers();
-        Task<User> GetUserByEmail(string email);
+       // Task<User> GetUserByEmail(string email);
     }
 }

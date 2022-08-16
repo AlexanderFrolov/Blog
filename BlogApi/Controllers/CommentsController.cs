@@ -29,9 +29,7 @@ namespace BlogApi.Controllers
             _posts = posts;
         }
 
-        /// <summary>
-        /// add comment
-        /// </summary>
+       
         [HttpPost]
         [Route("Add")]
         public async Task<IActionResult> AddComment([FromBody] AddCommentRequest request)
@@ -43,13 +41,11 @@ namespace BlogApi.Controllers
 
             await _comments.SaveComment(comment, user, post);
           
-            return StatusCode(201, $"Комментарий: {comment.Id} Пользователя: {user.DisplayName} " +
+            return StatusCode(201, $"Комментарий: {comment.Id} Пользователя: {user.FirstName } {user.LastName} " +
                 $"под постом: {post.Title} успешно добавлен!");
         }
 
-        /// <summary>
-        /// view comment by id 
-        /// </summary>
+       
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetComment([FromRoute] Guid id)
@@ -67,9 +63,7 @@ namespace BlogApi.Controllers
             return StatusCode(200, response);
         }
 
-        /// <summary>
-        /// view all comments 
-        /// </summary>
+    
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> GetAllComments()
@@ -85,9 +79,7 @@ namespace BlogApi.Controllers
             return StatusCode(200, response);
         }
 
-        /// <summary>
-        /// update comment
-        /// </summary>
+     
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateComment(
@@ -107,9 +99,7 @@ namespace BlogApi.Controllers
             return StatusCode(201, $"Комментарий {id} успешно изменен.");
         }
 
-        /// <summary>
-        /// deleting comment by id
-        /// </summary>
+    
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteComment([FromRoute] Guid id)

@@ -13,11 +13,10 @@ namespace Blog.Controllers
         private IMapper _mapper;
 
         public RolesController(
-            IRoleRepository tags,
-            IMapper mapper
-            )
+            IRoleRepository roles,
+            IMapper mapper)
         {
-            _roles = tags;
+            _roles = roles;
             _mapper = mapper;
         }
 
@@ -26,8 +25,8 @@ namespace Blog.Controllers
         /// view list Roles
         /// </summary>
         [HttpGet]
-        [Route("Roles")]
-        public async Task<IActionResult> GetAllRoles()
+        [Route("AllRoles")]
+        public async Task<IActionResult> GetRoles()
         {
             var roles = await _roles.GetAllRoles();
 

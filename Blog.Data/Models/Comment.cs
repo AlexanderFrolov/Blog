@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blog.Data.Models
 {
-    [Table("Comments")]
+    [Table("Comments")] 
     public class Comment
     {
+       
         public Guid Id { get; set; } = Guid.NewGuid();
         public DateTime AddDate { get; set; } = DateTime.Now;
         public string Content { get; set; }

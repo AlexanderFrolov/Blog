@@ -1,8 +1,31 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using Blog.Data.Models;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager;
 
-@*<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>*@
+@model Blog.ViewModels.Account.MainViewModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (SignInManager.IsSignedIn(User))
+{
+    //редирект
+
+}
+else
+{
+
+
+     <partial name="Login" model="@Model.LoginView" />
+ @*   <div class="row">
+        
+        <div class="main">
+           
+            <partial name="Register" model="@Model.RegisterView"/>
+        </div>
+
+    </div>*@
+
+}
