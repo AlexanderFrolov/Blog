@@ -1,1 +1,1 @@
-Final project: "Blog Development"
+"Blog Development"
